@@ -10,12 +10,14 @@ const authenticateWithApiKey = async (req, res, next, apiKey) => {
 			{
 				api_key: apiKey,
 				url: req.protocol + "://" + req.get("host") + req.originalUrl,
-				origin: req.headers["CF-Connecting-IP"]
+				origin: req.headers["cf-connecting-ip"]
 			},
 		)
 		.then((response: AxiosResponse) => {
 			if (response.data && response.data.scopes) {
 				res.locals.scopes = response.data.scopes
+				if (response.headers["request-id"]) res.set("Request-Id", response.headers["request-id"]);
+
 				return next()
 			} else {
 				return unavailable(
