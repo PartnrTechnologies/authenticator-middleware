@@ -9,8 +9,10 @@ require('dotenv').config();
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
 const authenticateWithApiKey = async (req, res, next, apiKey) => {
     await axios_1.default
-        .post(AUTHENTICATOR_API_URL, {}, {
-        headers: { authorization: `Bearer ${apiKey}` },
+        .post(AUTHENTICATOR_API_URL, {
+        api_key: apiKey,
+        url: req.protocol + "://" + req.get("host") + req.originalUrl,
+        origin: req.headers["CF-Connecting-IP"]
     })
         .then((response) => {
         if (response.data && response.data.scopes) {
