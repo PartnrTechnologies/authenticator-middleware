@@ -139,6 +139,7 @@ const authenticator = async (req, res, next, allowUnauthenticated) => {
 			return await authenticateWithFirebase(req, res, next, bearerToken, allowUnauthenticated)
 		}
 	}
+	if (allowUnauthenticated) return next()
 	unauthorized(res)
 }
 
