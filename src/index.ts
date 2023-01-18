@@ -56,6 +56,7 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
 			if (response.data && response.data.scopes) {
 				res.locals.scopes = response.data.scopes
 				res.locals.user = response.data.user
+				res.locals.firebase_data = response.data.firebase_data
 				if (response.headers["request-id"]) res.set("Request-Id", response.headers["request-id"]);
 
 				return next()
