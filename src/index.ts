@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL
 
-const authenticateWithApiKey = async (req, res, next, apiKey) => {
+const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated?) => {
 	await axios
 		.post(
 			AUTHENTICATOR_API_URL,
@@ -21,6 +21,8 @@ const authenticateWithApiKey = async (req, res, next, apiKey) => {
 
 				return next()
 			} else {
+				if (allowUnauthenticated) return next()
+
 				return unavailable(
 					res,
 					"We weren't able to get details about your API key.",
@@ -29,14 +31,18 @@ const authenticateWithApiKey = async (req, res, next, apiKey) => {
 		})
 		.catch((error) => {
 			if (error.response && error.response.data) {
+				if (allowUnauthenticated) return next()
+
 				return res.json(error.response.data)
 			} else {
+				if (allowUnauthenticated) return next()
+
 				return unavailable(res, "We weren't able to authenticate your request.")
 			}
 		})
 }
 
-const authenticateWithFirebase = async (req, res, next, bearerToken) => {
+const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauthenticated?) => {
 	await axios
 		.post(
 			AUTHENTICATOR_API_URL,
@@ -54,6 +60,8 @@ const authenticateWithFirebase = async (req, res, next, bearerToken) => {
 
 				return next()
 			} else {
+				if (allowUnauthenticated) return next()
+
 				return unavailable(
 					res,
 					"We weren't able to get details about you.",
@@ -62,8 +70,12 @@ const authenticateWithFirebase = async (req, res, next, bearerToken) => {
 		})
 		.catch((error) => {
 			if (error.response && error.response.data) {
+				if (allowUnauthenticated) return next()
+
 				return res.json(error.response.data)
 			} else {
+				if (allowUnauthenticated) return next()
+
 				return unavailable(res, "We weren't able to authenticate your request.")
 			}
 		})
@@ -101,7 +113,9 @@ const forbidden = (res, message?: string, missing_scope?: string) => {
 	})
 }
 
-const authenticator = async (req, res, next) => {
+const authenticator = async (req, res, next, allowUnauthenticated) => {
+	res.locals.scopes = []
+
 	let { authorization } = req.headers
 	if (
 		authorization !== undefined &&
@@ -118,22 +132,26 @@ const authenticator = async (req, res, next) => {
 
 
 		if (issuer !== undefined && issuer === "PARTNR LTDA") {
-			return await authenticateWithApiKey(req, res, next, bearerToken)
+			return await authenticateWithApiKey(req, res, next, bearerToken, allowUnauthenticated)
 		}
 
 		if (issuer !== undefined && issuer === "https://securetoken.google.com/partnr-technologies-production") {
-			return await authenticateWithFirebase(req, res, next, bearerToken)
+			return await authenticateWithFirebase(req, res, next, bearerToken, allowUnauthenticated)
 		}
 	}
 	unauthorized(res)
 }
 
-const auth = () => authenticator
+const auth = (allowUnauthenticated: boolean = false) => {
+	return (req, res, next) => {
+		return authenticator(req, res, next, allowUnauthenticated)
+	}
+}
 
 function ensureScope(scope: string) {
 	return (req, res, next) => {
 		const userScopes = res.locals.scopes
-		if (userScopes.includes(scope)) {
+		if (userScopes && userScopes.includes(scope)) {
 			return next()
 		}
 		return forbidden(res, 'Your API key is not valid for this request.', scope)

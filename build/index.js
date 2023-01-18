@@ -8,7 +8,7 @@ const axios_1 = __importDefault(require("axios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require('dotenv').config();
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
-const authenticateWithApiKey = async (req, res, next, apiKey) => {
+const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated) => {
     await axios_1.default
         .post(AUTHENTICATOR_API_URL, {
         api_key: apiKey,
@@ -23,19 +23,25 @@ const authenticateWithApiKey = async (req, res, next, apiKey) => {
             return next();
         }
         else {
+            if (allowUnauthenticated)
+                return next();
             return unavailable(res, "We weren't able to get details about your API key.");
         }
     })
         .catch((error) => {
         if (error.response && error.response.data) {
+            if (allowUnauthenticated)
+                return next();
             return res.json(error.response.data);
         }
         else {
+            if (allowUnauthenticated)
+                return next();
             return unavailable(res, "We weren't able to authenticate your request.");
         }
     });
 };
-const authenticateWithFirebase = async (req, res, next, bearerToken) => {
+const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauthenticated) => {
     await axios_1.default
         .post(AUTHENTICATOR_API_URL, {
         bearer_token: bearerToken,
@@ -51,14 +57,20 @@ const authenticateWithFirebase = async (req, res, next, bearerToken) => {
             return next();
         }
         else {
+            if (allowUnauthenticated)
+                return next();
             return unavailable(res, "We weren't able to get details about you.");
         }
     })
         .catch((error) => {
         if (error.response && error.response.data) {
+            if (allowUnauthenticated)
+                return next();
             return res.json(error.response.data);
         }
         else {
+            if (allowUnauthenticated)
+                return next();
             return unavailable(res, "We weren't able to authenticate your request.");
         }
     });
@@ -91,8 +103,9 @@ const forbidden = (res, message, missing_scope) => {
         },
     });
 };
-const authenticator = async (req, res, next) => {
+const authenticator = async (req, res, next, allowUnauthenticated) => {
     var _a;
+    res.locals.scopes = [];
     let { authorization } = req.headers;
     if (authorization !== undefined &&
         typeof authorization === 'string' &&
@@ -104,19 +117,23 @@ const authenticator = async (req, res, next) => {
         };
         let issuer = jwtData["iss"];
         if (issuer !== undefined && issuer === "PARTNR LTDA") {
-            return await authenticateWithApiKey(req, res, next, bearerToken);
+            return await authenticateWithApiKey(req, res, next, bearerToken, allowUnauthenticated);
         }
         if (issuer !== undefined && issuer === "https://securetoken.google.com/partnr-technologies-production") {
-            return await authenticateWithFirebase(req, res, next, bearerToken);
+            return await authenticateWithFirebase(req, res, next, bearerToken, allowUnauthenticated);
         }
     }
     unauthorized(res);
 };
-const auth = () => authenticator;
+const auth = (allowUnauthenticated = false) => {
+    return (req, res, next) => {
+        return authenticator(req, res, next, allowUnauthenticated);
+    };
+};
 function ensureScope(scope) {
     return (req, res, next) => {
         const userScopes = res.locals.scopes;
-        if (userScopes.includes(scope)) {
+        if (userScopes && userScopes.includes(scope)) {
             return next();
         }
         return forbidden(res, 'Your API key is not valid for this request.', scope);
