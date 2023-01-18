@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import jwt from "jsonwebtoken";
 require('dotenv').config()
 
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL
@@ -23,6 +24,39 @@ const authenticateWithApiKey = async (req, res, next, apiKey) => {
 				return unavailable(
 					res,
 					"We weren't able to get details about your API key.",
+				)
+			}
+		})
+		.catch((error) => {
+			if (error.response && error.response.data) {
+				return res.json(error.response.data)
+			} else {
+				return unavailable(res, "We weren't able to authenticate your request.")
+			}
+		})
+}
+
+const authenticateWithFirebase = async (req, res, next, bearerToken) => {
+	await axios
+		.post(
+			AUTHENTICATOR_API_URL,
+			{
+				bearer_token: bearerToken,
+				url: req.protocol + "://" + req.get("host") + req.originalUrl,
+				origin: req.headers["cf-connecting-ip"]
+			},
+		)
+		.then((response: AxiosResponse) => {
+			if (response.data && response.data.scopes) {
+				res.locals.scopes = response.data.scopes
+				res.locals.user = response.data.user
+				if (response.headers["request-id"]) res.set("Request-Id", response.headers["request-id"]);
+
+				return next()
+			} else {
+				return unavailable(
+					res,
+					"We weren't able to get details about you.",
 				)
 			}
 		})
@@ -75,8 +109,21 @@ const authenticator = async (req, res, next) => {
 		authorization.startsWith('Bearer ') &&
 		authorization.split('Bearer ').length === 2
 	) {
-		const apiKey = authorization.split('Bearer ')[1]
-		return await authenticateWithApiKey(req, res, next, apiKey)
+		const bearerToken = authorization.split('Bearer ')[1];
+
+		const jwtData = jwt.decode(bearerToken) ?? {
+			iss: ""
+		};
+		let issuer = jwtData["iss"];
+
+
+		if (issuer !== undefined && issuer === "PARTNR LTDA") {
+			return await authenticateWithApiKey(req, res, next, bearerToken)
+		}
+
+		if (issuer !== undefined && issuer === "https://securetoken.google.com/partnr-technologies-production") {
+			return await authenticateWithFirebase(req, res, next, bearerToken)
+		}
 	}
 	unauthorized(res)
 }
