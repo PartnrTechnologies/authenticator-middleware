@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import jwt from "jsonwebtoken";
-require('dotenv').config()
+import 'dotenv/config'
 
 export type Scope =
 	"@companies/bank-data/get" |

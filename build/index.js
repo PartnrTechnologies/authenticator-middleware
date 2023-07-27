@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ensureScope = void 0;
 const axios_1 = __importDefault(require("axios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-require('dotenv').config();
+require("dotenv/config");
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
 const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated) => {
     await axios_1.default
