@@ -2,6 +2,45 @@ import axios, { AxiosResponse } from 'axios'
 import jwt from "jsonwebtoken";
 require('dotenv').config()
 
+export type Scope =
+	"@companies/bank-data/get" |
+	"@companies/cash-dividends/get" |
+	"@companies/characteristics/get" |
+	"@companies/get" |
+	"@companies/insider-transactions/get" |
+	"@companies/list" |
+	"@companies/ratios/get" |
+	"@companies/ratios/valuation/get" |
+	"@companies/raw-reports/get" |
+	"@companies/raw-reports/reporting_models/get" |
+	"@companies/reports/get" |
+	"@companies/sectors/get" |
+	"@companies/sectors/list" |
+	"@companies/shares-history/get" |
+	"@companies/stock-dividends/get" |
+	"@companies/tickers/get" |
+	"@macroeconomics/indicators/get" |
+	"@macroeconomics/indicators/list" |
+	"@stocks/quote/get" |
+	"@stocks/quotes/get" |
+	"BOT_BROADCAST" |
+	"BOT_CREATE_TOPICS" |
+	"BOT_DELETE_TOPICS" |
+	"BOT_GET_TOPIC" |
+	"BOT_LIST_TOPICS" |
+	"BOT_SEND_TO_TOPICS" |
+	"BOT_UPDATE_TOPICS" |
+	"COMPANIES_LIST" |
+	"COMPANY_BASIC_DATA" |
+	"COMPANY_DETAILS" |
+	"COMPANY_FRE" |
+	"COMPANY_INDICATORS" |
+	"COMPANY_INSIDE_TRADES" |
+	"COMPANY_RAW_REPORTS" |
+	"COMPANY_REPORTS" |
+	"COMPANY_SUMMARY" |
+	"MACROECONOMICS";
+
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL
 
 const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated?) => {
@@ -150,7 +189,7 @@ const auth = (allowUnauthenticated: boolean = false) => {
 	}
 }
 
-function ensureScope(scope: string) {
+function ensureScope(scope: Scope) {
 	return (req, res, next) => {
 		const userScopes = res.locals.scopes
 		if (userScopes && userScopes.includes(scope)) {
