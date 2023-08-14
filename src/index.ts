@@ -23,6 +23,7 @@ export type Scope =
 	"@macroeconomics/indicators/list" |
 	"@stocks/quote/get" |
 	"@stocks/quotes/get" |
+	"@users/create" |
 	"BOT_BROADCAST" |
 	"BOT_CREATE_TOPICS" |
 	"BOT_DELETE_TOPICS" |
@@ -119,6 +120,10 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
 				return unavailable(res, "We weren't able to authenticate your request.")
 			}
 		})
+}
+
+const generateApiKey = async (jwtData) => {
+	return jwt.sign(jwtData, process.env.API_KEY_SECRET, { expiresIn: '1h' })
 }
 
 const unavailable = (res, reason?: string) => {
