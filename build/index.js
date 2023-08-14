@@ -76,6 +76,9 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
         }
     });
 };
+const generateApiKey = async (jwtData) => {
+    return jsonwebtoken_1.default.sign(jwtData, process.env.API_KEY_SECRET, { expiresIn: '1h' });
+};
 const unavailable = (res, reason) => {
     res.status(503);
     res.json({
