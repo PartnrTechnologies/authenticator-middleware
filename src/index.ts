@@ -24,6 +24,7 @@ export type Scope =
 	"@stocks/quote/get" |
 	"@stocks/quotes/get" |
 	"@users/create" |
+	"@users/notify" |
 	"BOT_BROADCAST" |
 	"BOT_CREATE_TOPICS" |
 	"BOT_DELETE_TOPICS" |
