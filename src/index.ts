@@ -24,6 +24,7 @@ export type Scope =
 	"@stocks/quote/get" |
 	"@stocks/quotes/get" |
 	"@users/create" |
+	"@users/get" |
 	"@users/notify" |
 	"BOT_BROADCAST" |
 	"BOT_CREATE_TOPICS" |
@@ -42,6 +43,8 @@ export type Scope =
 	"COMPANY_REPORTS" |
 	"COMPANY_SUMMARY" |
 	"MACROECONOMICS";
+
+export type UserRole = "user" | "insider" | "editor" | "admin"
 
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL
 
@@ -202,6 +205,16 @@ function ensureScope(scope: Scope) {
 			return next()
 		}
 		return forbidden(res, 'Your API key is not valid for this request.', scope)
+	}
+}
+
+function ensureRole(allowedRoles: UserRole[]) {
+	return (req, res, next) => {
+		const user = res.locals.user
+		if (user && allowedRoles.includes(user.role)) {
+			return next()
+		}
+		return forbidden(res, 'You do not have permission to access this resource.')
 	}
 }
 

@@ -146,5 +146,14 @@ function ensureScope(scope) {
     };
 }
 exports.ensureScope = ensureScope;
+function ensureRole(allowedRoles) {
+    return (req, res, next) => {
+        const user = res.locals.user;
+        if (user && allowedRoles.includes(user.role)) {
+            return next();
+        }
+        return forbidden(res, 'You do not have permission to access this resource.');
+    };
+}
 exports.default = auth;
 //# sourceMappingURL=index.js.map
