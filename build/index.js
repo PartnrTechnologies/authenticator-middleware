@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ensureScope = void 0;
+exports.ensureRole = exports.ensureScope = void 0;
 const axios_1 = __importDefault(require("axios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
@@ -149,11 +149,12 @@ exports.ensureScope = ensureScope;
 function ensureRole(allowedRoles) {
     return (req, res, next) => {
         const user = res.locals.user;
-        if (user && allowedRoles.includes(user.role)) {
+        if (user && allowedRoles.some(aR => aR === user.role)) {
             return next();
         }
         return forbidden(res, 'You do not have permission to access this resource.');
     };
 }
+exports.ensureRole = ensureRole;
 exports.default = auth;
 //# sourceMappingURL=index.js.map

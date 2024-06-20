@@ -211,13 +211,13 @@ function ensureScope(scope: Scope) {
 function ensureRole(allowedRoles: UserRole[]) {
 	return (req, res, next) => {
 		const user = res.locals.user
-		if (user && allowedRoles.includes(user.role)) {
+		if (user && allowedRoles.some(aR => aR === user.role)) {
 			return next()
 		}
 		return forbidden(res, 'You do not have permission to access this resource.')
 	}
 }
 
-export { ensureScope }
+export { ensureScope, ensureRole }
 
 export default auth

@@ -3,5 +3,6 @@ export type Scope = "@companies/bank-data/get" | "@companies/cash-dividends/get"
 export type UserRole = "user" | "insider" | "editor" | "admin";
 declare const auth: (allowUnauthenticated?: boolean) => (req: any, res: any, next: any) => Promise<any>;
 declare function ensureScope(scope: Scope): (req: any, res: any, next: any) => any;
-export { ensureScope };
+declare function ensureRole(allowedRoles: UserRole[]): (req: any, res: any, next: any) => any;
+export { ensureScope, ensureRole };
 export default auth;
