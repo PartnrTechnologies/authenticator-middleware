@@ -43,3 +43,12 @@ jspm_packages
 
 # Output of 'npm pack'
 *.tgz
+
+# Yarn 3 files
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -6,7 +6,6 @@
 	"types": "build/index.d.ts",
 	"author": "Partnr Technologies",
 	"license": "UNLICENSED",
-	"private": "true",
 	"scripts": {
 		"build": "tsc",
 		"clean": "rimraf .nyc_output coverage build",
