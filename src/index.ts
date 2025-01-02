@@ -2,47 +2,60 @@ import axios, { AxiosResponse } from 'axios'
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
 
-export type Scope =
-	"@companies/bank-data/get" |
-	"@companies/cash-dividends/get" |
-	"@companies/characteristics/get" |
-	"@companies/get" |
-	"@companies/insider-transactions/get" |
-	"@companies/list" |
-	"@companies/ratios/get" |
-	"@companies/ratios/valuation/get" |
-	"@companies/raw-reports/get" |
-	"@companies/raw-reports/reporting_models/get" |
-	"@companies/reports/get" |
-	"@companies/sectors/get" |
-	"@companies/sectors/list" |
-	"@companies/shares-history/get" |
-	"@companies/stock-dividends/get" |
-	"@companies/tickers/get" |
-	"@macroeconomics/indicators/get" |
-	"@macroeconomics/indicators/list" |
-	"@stocks/quote/get" |
-	"@stocks/quotes/get" |
-	"@users/create" |
-	"@users/get" |
-	"@users/notify" |
-	"BOT_BROADCAST" |
-	"BOT_CREATE_TOPICS" |
-	"BOT_DELETE_TOPICS" |
-	"BOT_GET_TOPIC" |
-	"BOT_LIST_TOPICS" |
-	"BOT_SEND_TO_TOPICS" |
-	"BOT_UPDATE_TOPICS" |
-	"COMPANIES_LIST" |
-	"COMPANY_BASIC_DATA" |
-	"COMPANY_DETAILS" |
-	"COMPANY_FRE" |
-	"COMPANY_INDICATORS" |
-	"COMPANY_INSIDE_TRADES" |
-	"COMPANY_RAW_REPORTS" |
-	"COMPANY_REPORTS" |
-	"COMPANY_SUMMARY" |
-	"MACROECONOMICS";
+export enum Scope {
+	COMPANIES_LIST = "@companies/list",
+	COMPANIES_GET = "@companies/get",
+	COMPANIES_SUMMARY_GET = "@companies/summary/get",
+	COMPANIES_SECTORS_LIST = "@companies/sectors/list",
+	COMPANIES_SECTORS_GET = "@companies/sectors/get",
+	COMPANIES_TICKERS_GET = "@companies/tickers/get",
+	COMPANIES_CHARACTERISTICS_GET = "@companies/characteristics/get",
+	COMPANIES_RAW_REPORTS_GET = "@companies/raw-reports/get",
+	COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET = "@companies/raw-reports/reporting_models/get",
+	COMPANIES_REPORTS_GET = "@companies/reports/get",
+	COMPANIES_RATIOS_GET = "@companies/ratios/get",
+	COMPANIES_RATIOS_VALUATION_GET = "@companies/ratios/valuation/get",
+	COMPANIES_INSIDER_TRANSACTIONS_GET = "@companies/insider-transactions/get",
+	COMPANIES_STOCK_DIVIDENDS_GET = "@companies/stock-dividends/get",
+	COMPANIES_CASH_DIVIDENDS_GET = "@companies/cash-dividends/get",
+	COMPANIES_BANK_DATA_GET = "@companies/bank-data/get",
+	STOCKS_QUOTE_GET = "@stocks/quote/get",
+	STOCKS_QUOTES_GET = "@stocks/quotes/get",
+	MACROECONOMICS_INDICATORS_LIST = "@macroeconomics/indicators/list",
+	MACROECONOMICS_INDICATORS_GET = "@macroeconomics/indicators/get",
+	COMPANIES_SHARES_HISTORY_GET = "@companies/shares-history/get",
+	USERS_CREATE = "@users/create",
+	USERS_NOTIFY = "@users/notify"
+}
+
+export const USER_ROLE_SCOPES = {
+	"user": [],
+	"insider": [
+		Scope.COMPANIES_LIST,
+		Scope.COMPANIES_GET,
+		Scope.COMPANIES_SUMMARY_GET,
+		Scope.COMPANIES_SECTORS_LIST,
+		Scope.COMPANIES_SECTORS_GET,
+		Scope.COMPANIES_TICKERS_GET,
+		Scope.COMPANIES_CHARACTERISTICS_GET,
+		Scope.COMPANIES_RAW_REPORTS_GET,
+		Scope.COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET,
+		Scope.COMPANIES_REPORTS_GET,
+		Scope.COMPANIES_RATIOS_GET,
+		Scope.COMPANIES_RATIOS_VALUATION_GET,
+		Scope.COMPANIES_INSIDER_TRANSACTIONS_GET,
+		Scope.COMPANIES_STOCK_DIVIDENDS_GET,
+		Scope.COMPANIES_CASH_DIVIDENDS_GET,
+		Scope.COMPANIES_BANK_DATA_GET,
+		Scope.STOCKS_QUOTE_GET,
+		Scope.STOCKS_QUOTES_GET,
+		Scope.MACROECONOMICS_INDICATORS_LIST,
+		Scope.MACROECONOMICS_INDICATORS_GET,
+		Scope.COMPANIES_SHARES_HISTORY_GET,
+	],
+	"editor": Object.values(Scope),
+	"admin": Object.values(Scope)
+}
 
 export type UserRole = "user" | "insider" | "editor" | "admin"
 

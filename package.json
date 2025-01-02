@@ -49,5 +49,6 @@
 		"axios": "^1.4.0",
 		"dotenv": "^16.3.1",
 		"jsonwebtoken": "^9.0.1"
-	}
+	},
+	"packageManager": "yarn@3.8.2+sha512.8cf1a37cdbccd13909ba9299dcb8e772292e76155aeeff14fd0a2488f74852c5345e4a2ca81c86a662d727c6d576f6e5b752b4b0958e8433e2c9869a748daaec"
 }

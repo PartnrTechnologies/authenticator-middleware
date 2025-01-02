@@ -3,10 +3,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ensureRole = exports.ensureScope = void 0;
+exports.ensureRole = exports.ensureScope = exports.USER_ROLE_SCOPES = exports.Scope = void 0;
 const axios_1 = __importDefault(require("axios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
+var Scope;
+(function (Scope) {
+    Scope["COMPANIES_LIST"] = "@companies/list";
+    Scope["COMPANIES_GET"] = "@companies/get";
+    Scope["COMPANIES_SUMMARY_GET"] = "@companies/summary/get";
+    Scope["COMPANIES_SECTORS_LIST"] = "@companies/sectors/list";
+    Scope["COMPANIES_SECTORS_GET"] = "@companies/sectors/get";
+    Scope["COMPANIES_TICKERS_GET"] = "@companies/tickers/get";
+    Scope["COMPANIES_CHARACTERISTICS_GET"] = "@companies/characteristics/get";
+    Scope["COMPANIES_RAW_REPORTS_GET"] = "@companies/raw-reports/get";
+    Scope["COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET"] = "@companies/raw-reports/reporting_models/get";
+    Scope["COMPANIES_REPORTS_GET"] = "@companies/reports/get";
+    Scope["COMPANIES_RATIOS_GET"] = "@companies/ratios/get";
+    Scope["COMPANIES_RATIOS_VALUATION_GET"] = "@companies/ratios/valuation/get";
+    Scope["COMPANIES_INSIDER_TRANSACTIONS_GET"] = "@companies/insider-transactions/get";
+    Scope["COMPANIES_STOCK_DIVIDENDS_GET"] = "@companies/stock-dividends/get";
+    Scope["COMPANIES_CASH_DIVIDENDS_GET"] = "@companies/cash-dividends/get";
+    Scope["COMPANIES_BANK_DATA_GET"] = "@companies/bank-data/get";
+    Scope["STOCKS_QUOTE_GET"] = "@stocks/quote/get";
+    Scope["STOCKS_QUOTES_GET"] = "@stocks/quotes/get";
+    Scope["MACROECONOMICS_INDICATORS_LIST"] = "@macroeconomics/indicators/list";
+    Scope["MACROECONOMICS_INDICATORS_GET"] = "@macroeconomics/indicators/get";
+    Scope["COMPANIES_SHARES_HISTORY_GET"] = "@companies/shares-history/get";
+    Scope["USERS_CREATE"] = "@users/create";
+    Scope["USERS_NOTIFY"] = "@users/notify";
+})(Scope || (exports.Scope = Scope = {}));
+exports.USER_ROLE_SCOPES = {
+    "user": [],
+    "insider": [
+        Scope.COMPANIES_LIST,
+        Scope.COMPANIES_GET,
+        Scope.COMPANIES_SUMMARY_GET,
+        Scope.COMPANIES_SECTORS_LIST,
+        Scope.COMPANIES_SECTORS_GET,
+        Scope.COMPANIES_TICKERS_GET,
+        Scope.COMPANIES_CHARACTERISTICS_GET,
+        Scope.COMPANIES_RAW_REPORTS_GET,
+        Scope.COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET,
+        Scope.COMPANIES_REPORTS_GET,
+        Scope.COMPANIES_RATIOS_GET,
+        Scope.COMPANIES_RATIOS_VALUATION_GET,
+        Scope.COMPANIES_INSIDER_TRANSACTIONS_GET,
+        Scope.COMPANIES_STOCK_DIVIDENDS_GET,
+        Scope.COMPANIES_CASH_DIVIDENDS_GET,
+        Scope.COMPANIES_BANK_DATA_GET,
+        Scope.STOCKS_QUOTE_GET,
+        Scope.STOCKS_QUOTES_GET,
+        Scope.MACROECONOMICS_INDICATORS_LIST,
+        Scope.MACROECONOMICS_INDICATORS_GET,
+        Scope.COMPANIES_SHARES_HISTORY_GET,
+    ],
+    "editor": Object.values(Scope),
+    "admin": Object.values(Scope)
+};
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
 const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated) => {
     await axios_1.default
