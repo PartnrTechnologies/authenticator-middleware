@@ -1,13 +1,7 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ensureRole = exports.ensureScope = exports.USER_ROLE_SCOPES = exports.Scope = void 0;
-const axios_1 = __importDefault(require("axios"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-require("dotenv/config");
-var Scope;
+import axios from 'axios';
+import jwt from "jsonwebtoken";
+import 'dotenv/config';
+export var Scope;
 (function (Scope) {
     Scope["COMPANIES_LIST"] = "@companies/list";
     Scope["COMPANIES_GET"] = "@companies/get";
@@ -32,8 +26,8 @@ var Scope;
     Scope["COMPANIES_SHARES_HISTORY_GET"] = "@companies/shares-history/get";
     Scope["USERS_CREATE"] = "@users/create";
     Scope["USERS_NOTIFY"] = "@users/notify";
-})(Scope || (exports.Scope = Scope = {}));
-exports.USER_ROLE_SCOPES = {
+})(Scope || (Scope = {}));
+export const USER_ROLE_SCOPES = {
     "user": [],
     "insider": [
         Scope.COMPANIES_LIST,
@@ -63,7 +57,7 @@ exports.USER_ROLE_SCOPES = {
 };
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
 const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated) => {
-    await axios_1.default
+    await axios
         .post(AUTHENTICATOR_API_URL, {
         api_key: apiKey,
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
@@ -96,7 +90,7 @@ const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticat
     });
 };
 const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauthenticated) => {
-    await axios_1.default
+    await axios
         .post(AUTHENTICATOR_API_URL, {
         bearer_token: bearerToken,
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
@@ -131,7 +125,7 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
     });
 };
 const generateApiKey = async (jwtData) => {
-    return jsonwebtoken_1.default.sign(jwtData, process.env.API_KEY_SECRET, { expiresIn: '1h' });
+    return jwt.sign(jwtData, process.env.API_KEY_SECRET, { expiresIn: '1h' });
 };
 const unavailable = (res, reason) => {
     res.status(503);
@@ -162,7 +156,6 @@ const forbidden = (res, message, missing_scope) => {
     });
 };
 const authenticator = async (req, res, next, allowUnauthenticated) => {
-    var _a;
     res.locals.scopes = [];
     let { authorization } = req.headers;
     if (authorization !== undefined &&
@@ -170,7 +163,7 @@ const authenticator = async (req, res, next, allowUnauthenticated) => {
         authorization.startsWith('Bearer ') &&
         authorization.split('Bearer ').length === 2) {
         const bearerToken = authorization.split('Bearer ')[1];
-        const jwtData = (_a = jsonwebtoken_1.default.decode(bearerToken)) !== null && _a !== void 0 ? _a : {
+        const jwtData = jwt.decode(bearerToken) ?? {
             iss: ""
         };
         let issuer = jwtData["iss"];
@@ -199,7 +192,6 @@ function ensureScope(scope) {
         return forbidden(res, 'Your API key is not valid for this request.', scope);
     };
 }
-exports.ensureScope = ensureScope;
 function ensureRole(allowedRoles) {
     return (req, res, next) => {
         const user = res.locals.user;
@@ -209,6 +201,6 @@ function ensureRole(allowedRoles) {
         return forbidden(res, 'You do not have permission to access this resource.');
     };
 }
-exports.ensureRole = ensureRole;
-exports.default = auth;
+export { ensureScope, ensureRole };
+export default auth;
 //# sourceMappingURL=index.js.map

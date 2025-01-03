@@ -1,23 +1,21 @@
 {
 	"compilerOptions": {
-		"target": "es2017",
-		"module": "commonjs",
+		"outDir": "dist",
+		"module": "NodeNext",
+		"target": "ESNext",
+		"moduleResolution": "NodeNext",
 		"declaration": true,
-		"moduleResolution": "node",
-		"lib": ["es5", "es6"],
-		"allowJs": true,
-		"outDir": "./build",
-		"rootDir": "./src",
-		"removeComments": true,
-		"typeRoots": ["./node_modules/@types", "./src/@types"],
 		"esModuleInterop": true,
-		"resolveJsonModule": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"sourceMap": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"baseUrl": "."
+		"rootDirs": ["src", "tests"],
+		"baseUrl": "src",
+		"paths": {
+			"@/tests/*": ["../tests/*"],
+			"@/*": ["*"]
+		}
 	},
-	"include": ["src/**/*"]
+	"exclude": ["node_modules", "dist", "experiments"],
+	"include": ["src/**/*.ts", "tests/**/*.spec.ts"]
 }
