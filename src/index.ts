@@ -112,7 +112,11 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
     .then((response: AxiosResponse) => {
       if (response.data && response.data.scopes) {
         res.locals.scopes = response.data.scopes
-        res.locals.user = response.data.user
+        res.locals.user = {
+          ...response.data.user,
+          auth_id: response.data.user.auth_id || response.data.user.firebase_uid,
+          firebase_uid: undefined,
+        }
         res.locals.firebase_data = response.data.firebase_data
         if (response.headers["request-id"]) res.set("Request-Id", response.headers["request-id"]);
 
