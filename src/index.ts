@@ -117,6 +117,7 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
           auth_id: response.data.user.auth_id || response.data.user.firebase_uid,
           firebase_uid: undefined,
         }
+        delete res.locals.user.firebase_uid;
         res.locals.firebase_data = response.data.firebase_data
         if (response.headers["request-id"]) res.set("Request-Id", response.headers["request-id"]);
 
