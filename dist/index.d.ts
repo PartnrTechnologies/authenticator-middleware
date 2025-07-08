@@ -22,7 +22,14 @@ export declare enum Scope {
     MACROECONOMICS_INDICATORS_GET = "@macroeconomics/indicators/get",
     COMPANIES_SHARES_HISTORY_GET = "@companies/shares-history/get",
     USERS_CREATE = "@users/create",
-    USERS_NOTIFY = "@users/notify"
+    USERS_NOTIFY = "@users/notify",
+    NEWS_GET = "@news/get",
+    NEWS_LIST = "@news/list",
+    NEWS_STOCKS_LIST = "@news/stocks/list",
+    NEWS_SECTORS_LIST = "@news/sectors/list",
+    NEWS_CURRENCIES_LIST = "@news/currencies/list",
+    NEWS_MACRO_LIST = "@news/macro/list",
+    NEWS_INDEXES_LIST = "@news/indexes/list"
 }
 export declare const USER_ROLE_SCOPES: {
     user: any[];

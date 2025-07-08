@@ -26,6 +26,13 @@ export var Scope;
     Scope["COMPANIES_SHARES_HISTORY_GET"] = "@companies/shares-history/get";
     Scope["USERS_CREATE"] = "@users/create";
     Scope["USERS_NOTIFY"] = "@users/notify";
+    Scope["NEWS_GET"] = "@news/get";
+    Scope["NEWS_LIST"] = "@news/list";
+    Scope["NEWS_STOCKS_LIST"] = "@news/stocks/list";
+    Scope["NEWS_SECTORS_LIST"] = "@news/sectors/list";
+    Scope["NEWS_CURRENCIES_LIST"] = "@news/currencies/list";
+    Scope["NEWS_MACRO_LIST"] = "@news/macro/list";
+    Scope["NEWS_INDEXES_LIST"] = "@news/indexes/list";
 })(Scope || (Scope = {}));
 export const USER_ROLE_SCOPES = {
     "user": [],
@@ -51,6 +58,13 @@ export const USER_ROLE_SCOPES = {
         Scope.MACROECONOMICS_INDICATORS_LIST,
         Scope.MACROECONOMICS_INDICATORS_GET,
         Scope.COMPANIES_SHARES_HISTORY_GET,
+        Scope.NEWS_GET,
+        Scope.NEWS_LIST,
+        Scope.NEWS_STOCKS_LIST,
+        Scope.NEWS_SECTORS_LIST,
+        Scope.NEWS_CURRENCIES_LIST,
+        Scope.NEWS_MACRO_LIST,
+        Scope.NEWS_INDEXES_LIST,
     ],
     "editor": Object.values(Scope),
     "admin": Object.values(Scope)
