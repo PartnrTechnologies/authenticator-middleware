@@ -16,8 +16,8 @@ export var Scope;
     Scope["COMPANIES_RATIOS_GET"] = "@companies/ratios/get";
     Scope["COMPANIES_RATIOS_VALUATION_GET"] = "@companies/ratios/valuation/get";
     Scope["COMPANIES_INSIDER_TRANSACTIONS_GET"] = "@companies/insider-transactions/get";
-    Scope["COMPANIES_STOCK_DIVIDENDS_GET"] = "@companies/stock-dividends/get";
-    Scope["COMPANIES_CASH_DIVIDENDS_GET"] = "@companies/cash-dividends/get";
+    Scope["COMPANIES_STOCK_CORPORATE_ACTIONS_GET"] = "@companies/stock-corporate-actions/get";
+    Scope["COMPANIES_CASH_CORPORATE_ACTIONS_GET"] = "@companies/cash-corporate-actions/get";
     Scope["COMPANIES_BANK_DATA_GET"] = "@companies/bank-data/get";
     Scope["STOCKS_QUOTE_GET"] = "@stocks/quote/get";
     Scope["STOCKS_QUOTES_GET"] = "@stocks/quotes/get";
@@ -50,8 +50,8 @@ export const USER_ROLE_SCOPES = {
         Scope.COMPANIES_RATIOS_GET,
         Scope.COMPANIES_RATIOS_VALUATION_GET,
         Scope.COMPANIES_INSIDER_TRANSACTIONS_GET,
-        Scope.COMPANIES_STOCK_DIVIDENDS_GET,
-        Scope.COMPANIES_CASH_DIVIDENDS_GET,
+        Scope.COMPANIES_STOCK_CORPORATE_ACTIONS_GET,
+        Scope.COMPANIES_CASH_CORPORATE_ACTIONS_GET,
         Scope.COMPANIES_BANK_DATA_GET,
         Scope.STOCKS_QUOTE_GET,
         Scope.STOCKS_QUOTES_GET,
