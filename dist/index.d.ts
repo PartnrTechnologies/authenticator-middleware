@@ -18,6 +18,7 @@ export declare enum Scope {
     COMPANIES_BANK_DATA_GET = "@companies/bank-data/get",
     STOCKS_QUOTE_GET = "@stocks/quote/get",
     STOCKS_QUOTES_GET = "@stocks/quotes/get",
+    STOCK_QUOTE_GET_REALTIME = "@stocks/quote/get/realtime",
     MACROECONOMICS_INDICATORS_LIST = "@macroeconomics/indicators/list",
     MACROECONOMICS_INDICATORS_GET = "@macroeconomics/indicators/get",
     COMPANIES_SHARES_HISTORY_GET = "@companies/shares-history/get",

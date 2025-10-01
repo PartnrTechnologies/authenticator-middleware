@@ -21,6 +21,7 @@ export var Scope;
     Scope["COMPANIES_BANK_DATA_GET"] = "@companies/bank-data/get";
     Scope["STOCKS_QUOTE_GET"] = "@stocks/quote/get";
     Scope["STOCKS_QUOTES_GET"] = "@stocks/quotes/get";
+    Scope["STOCK_QUOTE_GET_REALTIME"] = "@stocks/quote/get/realtime";
     Scope["MACROECONOMICS_INDICATORS_LIST"] = "@macroeconomics/indicators/list";
     Scope["MACROECONOMICS_INDICATORS_GET"] = "@macroeconomics/indicators/get";
     Scope["COMPANIES_SHARES_HISTORY_GET"] = "@companies/shares-history/get";
