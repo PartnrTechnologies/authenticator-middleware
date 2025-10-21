@@ -1,6 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios';
+import 'dotenv/config';
 import jwt from "jsonwebtoken";
-import 'dotenv/config'
 
 export enum Scope {
   COMPANIES_LIST = "@companies/list",
@@ -85,6 +85,9 @@ const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticat
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
         origin: req.headers["cf-connecting-ip"]
       },
+      {
+        timeout: 20000
+      }
     )
     .then((response: AxiosResponse) => {
       if (response.data && response.data.scopes) {
@@ -123,6 +126,9 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
         origin: req.headers["cf-connecting-ip"]
       },
+      {
+        timeout: 20000
+      }
     )
     .then((response: AxiosResponse) => {
       if (response.data && response.data.scopes) {
@@ -251,6 +257,6 @@ function ensureRole(allowedRoles: UserRole[]) {
   }
 }
 
-export { ensureScope, ensureRole }
+export { ensureRole, ensureScope };
 
 export default auth
