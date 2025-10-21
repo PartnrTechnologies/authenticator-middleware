@@ -1,6 +1,6 @@
 import axios from 'axios';
-import jwt from "jsonwebtoken";
 import 'dotenv/config';
+import jwt from "jsonwebtoken";
 export var Scope;
 (function (Scope) {
     Scope["COMPANIES_LIST"] = "@companies/list";
@@ -77,6 +77,8 @@ const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticat
         api_key: apiKey,
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
         origin: req.headers["cf-connecting-ip"]
+    }, {
+        timeout: 20000
     })
         .then((response) => {
         if (response.data && response.data.scopes) {
@@ -110,6 +112,8 @@ const authenticateWithFirebase = async (req, res, next, bearerToken, allowUnauth
         bearer_token: bearerToken,
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
         origin: req.headers["cf-connecting-ip"]
+    }, {
+        timeout: 20000
     })
         .then((response) => {
         if (response.data && response.data.scopes) {
@@ -221,6 +225,6 @@ function ensureRole(allowedRoles) {
         return forbidden(res, 'You do not have permission to access this resource.');
     };
 }
-export { ensureScope, ensureRole };
+export { ensureRole, ensureScope };
 export default auth;
 //# sourceMappingURL=index.js.map

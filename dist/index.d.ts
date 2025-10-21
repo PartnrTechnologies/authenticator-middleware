@@ -42,5 +42,5 @@ export type UserRole = "user" | "insider" | "editor" | "admin";
 declare const auth: (allowUnauthenticated?: boolean) => (req: any, res: any, next: any) => Promise<any>;
 declare function ensureScope(scope: Scope): (req: any, res: any, next: any) => any;
 declare function ensureRole(allowedRoles: UserRole[]): (req: any, res: any, next: any) => any;
-export { ensureScope, ensureRole };
+export { ensureRole, ensureScope };
 export default auth;
