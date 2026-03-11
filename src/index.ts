@@ -310,12 +310,92 @@ function hasSpecificResourceScope(scope: Scope, userScopes: string[], params: Re
   })
 }
 
+function parseScopeQueryConstraints(scope: Scope, userScope: string): Record<string, string[]> | null {
+  const scopedPrefix = `${scope}?`
+  if (!userScope.startsWith(scopedPrefix)) return null
+
+  const queryString = userScope.slice(scopedPrefix.length)
+  const queryConstraints: Record<string, string[]> = {}
+  const searchParams = new URLSearchParams(queryString)
+
+  searchParams.forEach((value, key) => {
+    const values = value
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0)
+
+    if (values.length === 0) return
+
+    if (!queryConstraints[key]) queryConstraints[key] = []
+    queryConstraints[key].push(...values)
+  })
+
+  return queryConstraints
+}
+
+function getNormalizedRequestValues(value: unknown): string[] {
+  if (value === undefined || value === null) return []
+
+  const values = Array.isArray(value) ? value : [value]
+  return values
+    .flatMap((item) => String(item).split(','))
+    .map((item) => item.trim().toLowerCase())
+    .filter((item) => item.length > 0)
+}
+
+function hasConstrainedQueryScope(scope: Scope, userScopes: string[], req): boolean {
+  const constrainedScopes = userScopes
+    .map((userScope) => parseScopeQueryConstraints(scope, userScope))
+    .filter((constraints) => constraints !== null)
+
+  if (constrainedScopes.length === 0) return false
+
+  const allowedValuesByParam = new Map<string, Map<string, string>>()
+
+  constrainedScopes.forEach((constraints) => {
+    Object.entries(constraints).forEach(([paramKey, values]) => {
+      if (!allowedValuesByParam.has(paramKey)) {
+        allowedValuesByParam.set(paramKey, new Map<string, string>())
+      }
+
+      const allowedValues = allowedValuesByParam.get(paramKey)
+      values.forEach((value) => {
+        const normalizedValue = value.toLowerCase()
+        if (!allowedValues.has(normalizedValue)) {
+          allowedValues.set(normalizedValue, value)
+        }
+      })
+    })
+  })
+
+  for (const [paramKey, allowedValues] of allowedValuesByParam.entries()) {
+    const requestValues = getNormalizedRequestValues(req.query[paramKey])
+    if (requestValues.length === 0) continue
+
+    const hasInvalidValue = requestValues.some((value) => !allowedValues.has(value))
+    if (hasInvalidValue) return false
+  }
+
+  for (const [paramKey, allowedValues] of allowedValuesByParam.entries()) {
+    const requestValues = getNormalizedRequestValues(req.query[paramKey])
+    if (requestValues.length > 0) continue
+
+    req.query[paramKey] = Array.from(allowedValues.values()).join(',')
+  }
+
+  return true
+}
+
 function ensureScope(scope: Scope) {
   return (req, res, next) => {
     const userScopes = res.locals.scopes
     if (
       Array.isArray(userScopes) &&
-      (userScopes.includes(scope) || hasSpecificResourceScope(scope, userScopes, req.params))
+      (
+        userScopes.includes(scope) ||
+        hasSpecificResourceScope(scope, userScopes, req.params) ||
+        hasConstrainedQueryScope(scope, userScopes, req)
+      )
     ) {
       return next()
     }
