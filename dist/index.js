@@ -8,39 +8,57 @@ export var Scope;
     Scope["COMPANIES_SUMMARY_GET"] = "@companies/summary/get";
     Scope["COMPANIES_SECTORS_LIST"] = "@companies/sectors/list";
     Scope["COMPANIES_SECTORS_GET"] = "@companies/sectors/get";
-    Scope["COMPANIES_TICKERS_GET"] = "@companies/tickers/get";
     Scope["COMPANIES_CHARACTERISTICS_GET"] = "@companies/characteristics/get";
+    Scope["COMPANIES_DOCUMENTS_GET"] = "@companies/documents/get";
     Scope["COMPANIES_RAW_REPORTS_GET"] = "@companies/raw-reports/get";
-    Scope["COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET"] = "@companies/raw-reports/reporting_models/get";
     Scope["COMPANIES_REPORTS_GET"] = "@companies/reports/get";
     Scope["COMPANIES_RATIOS_GET"] = "@companies/ratios/get";
     Scope["COMPANIES_RATIOS_VALUATION_GET"] = "@companies/ratios/valuation/get";
     Scope["COMPANIES_INSIDER_TRANSACTIONS_GET"] = "@companies/insider-transactions/get";
-    Scope["COMPANIES_STOCK_CORPORATE_ACTIONS_GET"] = "@companies/stock-corporate-actions/get";
+    Scope["COMPANIES_CASH_CORPORATE_ACTIONS_LIST"] = "@companies/cash-corporate-actions/list";
     Scope["COMPANIES_CASH_CORPORATE_ACTIONS_GET"] = "@companies/cash-corporate-actions/get";
+    Scope["COMPANIES_CORPORATE_ACTIONS_GET"] = "@companies/corporate-actions/get";
     Scope["COMPANIES_BANK_DATA_GET"] = "@companies/bank-data/get";
     Scope["COMPANIES_SHARES_HISTORY_GET"] = "@companies/shares-history/get";
-    Scope["STOCKS_QUOTE_GET"] = "@stocks/quote/get";
-    Scope["STOCKS_QUOTES_GET"] = "@stocks/quotes/get";
+    Scope["STOCKS_QUOTES_POST"] = "@stocks/quotes/post";
+    Scope["STOCKS_QUOTE_POST"] = "@stocks/quote/post";
+    Scope["STOCKS_VARIATIONS_GET"] = "@stocks/variations/get";
+    Scope["STOCKS_AVERAGE_VOLUME_POST"] = "@stocks/average-volume/post";
+    Scope["STOCKS_TICKER_QUOTE_GET"] = "@stocks/ticker/quote/get";
+    Scope["STOCKS_TICKER_VARIATION_GET"] = "@stocks/ticker/variation/get";
+    Scope["STOCKS_TICKER_QUOTES_GET"] = "@stocks/ticker/quotes/get";
+    Scope["STOCKS_TICKER_AVERAGE_VOLUME_GET"] = "@stocks/ticker/average-volume/get";
     Scope["STOCK_QUOTE_GET_REALTIME"] = "@stocks/quote/get/realtime";
+    Scope["QUOTES_GET"] = "@quotes/get";
     Scope["MACROECONOMICS_INDICATORS_LIST"] = "@macroeconomics/indicators/list";
     Scope["MACROECONOMICS_INDICATORS_GET"] = "@macroeconomics/indicators/get";
     Scope["TRADED_FUNDS_LIST"] = "@traded-funds/list";
     Scope["TRADED_FUNDS_GET"] = "@traded-funds/get";
-    Scope["TRADED_FUNDS_SHARES_HISTORY_GET"] = "@traded-funds/shares-history/get";
-    Scope["TRADED_FUNDS_REPORTS_GET"] = "@traded-funds/reports/get";
-    Scope["TRADED_FUNDS_RATIOS_GET"] = "@traded-funds/ratios/get";
-    Scope["TRADED_FUNDS_RATIOS_VALUATION_GET"] = "@traded-funds/ratios/valuation/get";
-    Scope["TRADED_FUNDS_SHAREHOLDERS_GET"] = "@traded-funds/shareholders/get";
+    Scope["INVESTMENT_FIRMS_LIST"] = "@investment-firms/list";
+    Scope["WORKFLOWS_START"] = "@workflows/start";
+    Scope["SCREENER_RUN"] = "@screener/run";
+    Scope["DROPS_LIST"] = "@drops/list";
+    Scope["DROPS_WALLET_RATING_GET"] = "@drops/wallet-rating/get";
+    Scope["DROPS_GET"] = "@drops/get";
+    Scope["DROPS_LIKE_GET"] = "@drops/like/get";
+    Scope["DROPS_LIKE_CREATE"] = "@drops/like/create";
+    Scope["DROPS_LIKE_DELETE"] = "@drops/like/delete";
+    Scope["DROPS_LOGO_GET"] = "@drops/logo/get";
+    Scope["DROPS_RATIOS_GET"] = "@drops/ratios/get";
+    Scope["DROPS_ACCOUNTING_RISK_RATIO_GET"] = "@drops/accounting-risk-ratio/get";
+    Scope["DROPS_RATIO_GET"] = "@drops/ratio/get";
+    Scope["DROPS_REFERRALS_GET"] = "@drops/referrals/get";
     Scope["USERS_CREATE"] = "@users/create";
+    Scope["USERS_LIST"] = "@users/list";
+    Scope["USERS_API_CREATE"] = "@users/api/create";
     Scope["USERS_NOTIFY"] = "@users/notify";
+    Scope["USERS_ME_GET"] = "@users/me/get";
+    Scope["USERS_ME_PATCH"] = "@users/me/patch";
+    Scope["USERS_ME_DEVICES_CREATE"] = "@users/me/devices/create";
+    Scope["USERS_GET"] = "@users/get";
+    Scope["USERS_PATCH"] = "@users/patch";
     Scope["NEWS_GET"] = "@news/get";
     Scope["NEWS_LIST"] = "@news/list";
-    Scope["NEWS_STOCKS_LIST"] = "@news/stocks/list";
-    Scope["NEWS_SECTORS_LIST"] = "@news/sectors/list";
-    Scope["NEWS_CURRENCIES_LIST"] = "@news/currencies/list";
-    Scope["NEWS_MACRO_LIST"] = "@news/macro/list";
-    Scope["NEWS_INDEXES_LIST"] = "@news/indexes/list";
 })(Scope || (Scope = {}));
 export const USER_ROLE_SCOPES = {
     "user": [],
@@ -50,29 +68,56 @@ export const USER_ROLE_SCOPES = {
         Scope.COMPANIES_SUMMARY_GET,
         Scope.COMPANIES_SECTORS_LIST,
         Scope.COMPANIES_SECTORS_GET,
-        Scope.COMPANIES_TICKERS_GET,
         Scope.COMPANIES_CHARACTERISTICS_GET,
+        Scope.COMPANIES_DOCUMENTS_GET,
         Scope.COMPANIES_RAW_REPORTS_GET,
-        Scope.COMPANIES_RAW_REPORTS_REPORTING_MODELS_GET,
         Scope.COMPANIES_REPORTS_GET,
         Scope.COMPANIES_RATIOS_GET,
         Scope.COMPANIES_RATIOS_VALUATION_GET,
         Scope.COMPANIES_INSIDER_TRANSACTIONS_GET,
-        Scope.COMPANIES_STOCK_CORPORATE_ACTIONS_GET,
+        Scope.COMPANIES_CASH_CORPORATE_ACTIONS_LIST,
         Scope.COMPANIES_CASH_CORPORATE_ACTIONS_GET,
+        Scope.COMPANIES_CORPORATE_ACTIONS_GET,
         Scope.COMPANIES_BANK_DATA_GET,
-        Scope.STOCKS_QUOTE_GET,
-        Scope.STOCKS_QUOTES_GET,
+        Scope.STOCKS_QUOTES_POST,
+        Scope.STOCKS_QUOTE_POST,
+        Scope.STOCKS_VARIATIONS_GET,
+        Scope.STOCKS_AVERAGE_VOLUME_POST,
+        Scope.STOCKS_TICKER_QUOTE_GET,
+        Scope.STOCKS_TICKER_VARIATION_GET,
+        Scope.STOCKS_TICKER_QUOTES_GET,
+        Scope.STOCKS_TICKER_AVERAGE_VOLUME_GET,
+        Scope.QUOTES_GET,
         Scope.MACROECONOMICS_INDICATORS_LIST,
         Scope.MACROECONOMICS_INDICATORS_GET,
+        Scope.INVESTMENT_FIRMS_LIST,
+        Scope.SCREENER_RUN,
+        Scope.DROPS_LIST,
+        Scope.DROPS_WALLET_RATING_GET,
+        Scope.DROPS_GET,
+        Scope.DROPS_LIKE_GET,
+        Scope.DROPS_LIKE_CREATE,
+        Scope.DROPS_LIKE_DELETE,
+        Scope.DROPS_LOGO_GET,
+        Scope.DROPS_RATIOS_GET,
+        Scope.DROPS_ACCOUNTING_RISK_RATIO_GET,
+        Scope.DROPS_RATIO_GET,
+        Scope.DROPS_REFERRALS_GET,
         Scope.COMPANIES_SHARES_HISTORY_GET,
+        Scope.TRADED_FUNDS_LIST,
+        Scope.TRADED_FUNDS_GET,
         Scope.NEWS_GET,
         Scope.NEWS_LIST,
-        Scope.NEWS_STOCKS_LIST,
-        Scope.NEWS_SECTORS_LIST,
-        Scope.NEWS_CURRENCIES_LIST,
-        Scope.NEWS_MACRO_LIST,
-        Scope.NEWS_INDEXES_LIST,
+        Scope.USERS_LIST,
+        Scope.USERS_CREATE,
+        Scope.USERS_API_CREATE,
+        Scope.USERS_NOTIFY,
+        Scope.USERS_ME_GET,
+        Scope.USERS_ME_PATCH,
+        Scope.USERS_ME_DEVICES_CREATE,
+        Scope.USERS_GET,
+        Scope.USERS_PATCH,
+        Scope.WORKFLOWS_START,
     ],
     "editor": Object.values(Scope),
     "admin": Object.values(Scope)
@@ -214,10 +259,30 @@ const auth = (allowUnauthenticated = false) => {
         return authenticator(req, res, next, allowUnauthenticated);
     };
 };
+function hasSpecificResourceScope(scope, userScopes, params) {
+    const scopedPrefix = `${scope}/`;
+    const resourceValues = Object.values(params ?? {})
+        .filter((value) => typeof value === 'string')
+        .map((value) => value.trim().toLowerCase())
+        .filter((value) => value.length > 0);
+    if (resourceValues.length === 0)
+        return false;
+    return userScopes.some((userScope) => {
+        if (!userScope.startsWith(scopedPrefix))
+            return false;
+        const scopedResources = userScope
+            .slice(scopedPrefix.length)
+            .split(',')
+            .map((value) => value.trim().toLowerCase())
+            .filter((value) => value.length > 0);
+        return scopedResources.some((scopedResource) => resourceValues.includes(scopedResource));
+    });
+}
 function ensureScope(scope) {
     return (req, res, next) => {
         const userScopes = res.locals.scopes;
-        if (userScopes && userScopes.includes(scope)) {
+        if (Array.isArray(userScopes) &&
+            (userScopes.includes(scope) || hasSpecificResourceScope(scope, userScopes, req.params))) {
             return next();
         }
         return forbidden(res, 'Your API key is not valid for this request.', scope);
