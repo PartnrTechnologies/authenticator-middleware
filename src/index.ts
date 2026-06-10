@@ -30,6 +30,7 @@ export enum Scope {
   STOCKS_TICKER_AVERAGE_VOLUME_GET = "@stocks/ticker/average-volume/get",
   STOCK_QUOTE_GET_REALTIME = "@stocks/quote/get/realtime",
   QUOTES_GET = "@quotes/get",
+  QUOTES_POST = "@quotes/post",
   MACROECONOMICS_INDICATORS_LIST = "@macroeconomics/indicators/list",
   MACROECONOMICS_INDICATORS_GET = "@macroeconomics/indicators/get",
   TRADED_FUNDS_LIST = "@traded-funds/list",
@@ -59,6 +60,7 @@ export enum Scope {
   USERS_PATCH = "@users/patch",
   NEWS_GET = "@news/get",
   NEWS_LIST = "@news/list",
+  ADMIN_FULL = "@admin/full",
 }
 
 export const USER_ROLE_SCOPES = {
@@ -89,6 +91,7 @@ export const USER_ROLE_SCOPES = {
     Scope.STOCKS_TICKER_QUOTES_GET,
     Scope.STOCKS_TICKER_AVERAGE_VOLUME_GET,
     Scope.QUOTES_GET,
+    Scope.QUOTES_POST,
     Scope.MACROECONOMICS_INDICATORS_LIST,
     Scope.MACROECONOMICS_INDICATORS_GET,
     Scope.INVESTMENT_FIRMS_LIST,
@@ -120,7 +123,7 @@ export const USER_ROLE_SCOPES = {
     Scope.USERS_PATCH,
     Scope.WORKFLOWS_START,
   ],
-  "editor": Object.values(Scope),
+  "editor": Object.values(Scope).filter((scope) => scope !== Scope.ADMIN_FULL),
   "admin": Object.values(Scope)
 }
 

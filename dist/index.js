@@ -30,6 +30,7 @@ export var Scope;
     Scope["STOCKS_TICKER_AVERAGE_VOLUME_GET"] = "@stocks/ticker/average-volume/get";
     Scope["STOCK_QUOTE_GET_REALTIME"] = "@stocks/quote/get/realtime";
     Scope["QUOTES_GET"] = "@quotes/get";
+    Scope["QUOTES_POST"] = "@quotes/post";
     Scope["MACROECONOMICS_INDICATORS_LIST"] = "@macroeconomics/indicators/list";
     Scope["MACROECONOMICS_INDICATORS_GET"] = "@macroeconomics/indicators/get";
     Scope["TRADED_FUNDS_LIST"] = "@traded-funds/list";
@@ -59,6 +60,7 @@ export var Scope;
     Scope["USERS_PATCH"] = "@users/patch";
     Scope["NEWS_GET"] = "@news/get";
     Scope["NEWS_LIST"] = "@news/list";
+    Scope["ADMIN_FULL"] = "@admin/full";
 })(Scope || (Scope = {}));
 export const USER_ROLE_SCOPES = {
     "user": [],
@@ -88,6 +90,7 @@ export const USER_ROLE_SCOPES = {
         Scope.STOCKS_TICKER_QUOTES_GET,
         Scope.STOCKS_TICKER_AVERAGE_VOLUME_GET,
         Scope.QUOTES_GET,
+        Scope.QUOTES_POST,
         Scope.MACROECONOMICS_INDICATORS_LIST,
         Scope.MACROECONOMICS_INDICATORS_GET,
         Scope.INVESTMENT_FIRMS_LIST,
@@ -119,7 +122,7 @@ export const USER_ROLE_SCOPES = {
         Scope.USERS_PATCH,
         Scope.WORKFLOWS_START,
     ],
-    "editor": Object.values(Scope),
+    "editor": Object.values(Scope).filter((scope) => scope !== Scope.ADMIN_FULL),
     "admin": Object.values(Scope)
 };
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL;
