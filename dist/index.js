@@ -31,13 +31,29 @@ export var Scope;
     Scope["STOCK_QUOTE_GET_REALTIME"] = "@stocks/quote/get/realtime";
     Scope["QUOTES_GET"] = "@quotes/get";
     Scope["QUOTES_POST"] = "@quotes/post";
+    Scope["QUOTES_GET_EOD"] = "@quotes/get/eod";
+    Scope["QUOTES_POST_EOD"] = "@quotes/post/eod";
+    Scope["QUOTES_GET_DELAY"] = "@quotes/get/delay";
+    Scope["QUOTES_POST_DELAY"] = "@quotes/post/delay";
     Scope["MACROECONOMICS_INDICATORS_LIST"] = "@macroeconomics/indicators/list";
     Scope["MACROECONOMICS_INDICATORS_GET"] = "@macroeconomics/indicators/get";
     Scope["TRADED_FUNDS_LIST"] = "@traded-funds/list";
     Scope["TRADED_FUNDS_GET"] = "@traded-funds/get";
+    Scope["TRADED_FUNDS_REPORTS_GET"] = "@traded-funds/reports/get";
+    Scope["TRADED_FUNDS_UNITHOLDERS_GET"] = "@traded-funds/unitholders/get";
+    Scope["TRADED_FUNDS_UNITHOLDERS_CONCENTRATION_GET"] = "@traded-funds/unitholders/concentration/get";
+    Scope["TRADED_FUNDS_RATIOS_GET"] = "@traded-funds/ratios/get";
+    Scope["TRADED_FUNDS_RATIOS_VALUATION_GET"] = "@traded-funds/ratios/valuation/get";
+    Scope["TRADED_FUNDS_PORTFOLIO_GET"] = "@traded-funds/portfolio/get";
+    Scope["TRADED_FUNDS_TRADES_GET"] = "@traded-funds/trades/get";
+    Scope["TRADED_FUNDS_UNITS_HISTORY_GET"] = "@traded-funds/units-history/get";
+    Scope["TRADED_FUNDS_GOVERNANCE_GET"] = "@traded-funds/governance/get";
+    Scope["TRADED_FUNDS_CREDIT_QUALITY_GET"] = "@traded-funds/credit-quality/get";
+    Scope["TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET"] = "@traded-funds/cash-corporate-actions/get";
+    Scope["TRADED_FUNDS_CORPORATE_ACTIONS_GET"] = "@traded-funds/corporate-actions/get";
     Scope["INVESTMENT_FIRMS_LIST"] = "@investment-firms/list";
     Scope["WORKFLOWS_START"] = "@workflows/start";
-    Scope["SCREENER_RUN"] = "@screener/run";
+    Scope["SCREENER_GET"] = "@screener/get";
     Scope["DROPS_LIST"] = "@drops/list";
     Scope["DROPS_WALLET_RATING_GET"] = "@drops/wallet-rating/get";
     Scope["DROPS_GET"] = "@drops/get";
@@ -94,7 +110,7 @@ export const USER_ROLE_SCOPES = {
         Scope.MACROECONOMICS_INDICATORS_LIST,
         Scope.MACROECONOMICS_INDICATORS_GET,
         Scope.INVESTMENT_FIRMS_LIST,
-        Scope.SCREENER_RUN,
+        Scope.SCREENER_GET,
         Scope.DROPS_LIST,
         Scope.DROPS_WALLET_RATING_GET,
         Scope.DROPS_GET,
@@ -109,6 +125,18 @@ export const USER_ROLE_SCOPES = {
         Scope.COMPANIES_SHARES_HISTORY_GET,
         Scope.TRADED_FUNDS_LIST,
         Scope.TRADED_FUNDS_GET,
+        Scope.TRADED_FUNDS_REPORTS_GET,
+        Scope.TRADED_FUNDS_UNITHOLDERS_GET,
+        Scope.TRADED_FUNDS_UNITHOLDERS_CONCENTRATION_GET,
+        Scope.TRADED_FUNDS_RATIOS_GET,
+        Scope.TRADED_FUNDS_RATIOS_VALUATION_GET,
+        Scope.TRADED_FUNDS_PORTFOLIO_GET,
+        Scope.TRADED_FUNDS_TRADES_GET,
+        Scope.TRADED_FUNDS_UNITS_HISTORY_GET,
+        Scope.TRADED_FUNDS_GOVERNANCE_GET,
+        Scope.TRADED_FUNDS_CREDIT_QUALITY_GET,
+        Scope.TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET,
+        Scope.TRADED_FUNDS_CORPORATE_ACTIONS_GET,
         Scope.NEWS_GET,
         Scope.NEWS_LIST,
         Scope.USERS_LIST,
@@ -310,6 +338,14 @@ function getNormalizedRequestValues(value) {
         .map((item) => item.trim().toLowerCase())
         .filter((item) => item.length > 0);
 }
+// Constraints are matched against both query string and JSON body so that GET
+// routes (params in req.query) and POST routes (params in req.body) are covered.
+function getNormalizedRequestParam(req, paramKey) {
+    return [
+        ...getNormalizedRequestValues(req.query?.[paramKey]),
+        ...getNormalizedRequestValues(req.body?.[paramKey]),
+    ];
+}
 function hasConstrainedQueryScope(scope, userScopes, req) {
     const constrainedScopes = userScopes
         .map((userScope) => parseScopeQueryConstraints(scope, userScope))
@@ -332,7 +368,7 @@ function hasConstrainedQueryScope(scope, userScopes, req) {
         });
     });
     for (const [paramKey, allowedValues] of allowedValuesByParam.entries()) {
-        const requestValues = getNormalizedRequestValues(req.query[paramKey]);
+        const requestValues = getNormalizedRequestParam(req, paramKey);
         if (requestValues.length === 0)
             continue;
         const hasInvalidValue = requestValues.some((value) => !allowedValues.has(value));
@@ -340,10 +376,16 @@ function hasConstrainedQueryScope(scope, userScopes, req) {
             return false;
     }
     for (const [paramKey, allowedValues] of allowedValuesByParam.entries()) {
-        const requestValues = getNormalizedRequestValues(req.query[paramKey]);
+        const requestValues = getNormalizedRequestParam(req, paramKey);
         if (requestValues.length > 0)
             continue;
-        req.query[paramKey] = Array.from(allowedValues.values()).join(',');
+        // Inject the fixed value so downstream handlers read it regardless of whether
+        // they look in the query string (GET) or the JSON body (POST).
+        const fixedValue = Array.from(allowedValues.values()).join(',');
+        if (req.query)
+            req.query[paramKey] = fixedValue;
+        if (req.body && typeof req.body === 'object')
+            req.body[paramKey] = fixedValue;
     }
     return true;
 }
@@ -359,6 +401,35 @@ function ensureScope(scope) {
         return forbidden(res, 'Your API key is not valid for this request.', scope);
     };
 }
+// Quote requests are tiered by the `type` parameter (query for GET, body for POST):
+//   type=current            -> "delay"  tier (delayed live/spot quote)
+//   type=historical | chart -> "eod"    tier (end-of-day series), also the default
+// The umbrella scope grants every tier; a tier scope grants only its own tier.
+// Resource (/<ticker>) and query/body (?param=value) constraints work on every level.
+function resolveQuoteType(req) {
+    const raw = req.body?.type ?? req.query?.type;
+    const value = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
+    if (value === 'current' || value === 'chart')
+        return value;
+    return 'historical';
+}
+function ensureQuotesScope(umbrella, eodScope, delayScope) {
+    return (req, res, next) => {
+        const userScopes = res.locals.scopes;
+        if (!Array.isArray(userScopes)) {
+            return forbidden(res, 'Your API key is not valid for this request.', umbrella);
+        }
+        const tierScope = resolveQuoteType(req) === 'current' ? delayScope : eodScope;
+        for (const scope of [umbrella, tierScope]) {
+            if (userScopes.includes(scope) ||
+                hasSpecificResourceScope(scope, userScopes, req.params) ||
+                hasConstrainedQueryScope(scope, userScopes, req)) {
+                return next();
+            }
+        }
+        return forbidden(res, 'Your API key is not valid for this request.', tierScope);
+    };
+}
 function ensureRole(allowedRoles) {
     return (req, res, next) => {
         const user = res.locals.user;
@@ -368,6 +439,6 @@ function ensureRole(allowedRoles) {
         return forbidden(res, 'You do not have permission to access this resource.');
     };
 }
-export { ensureRole, ensureScope };
+export { ensureQuotesScope, ensureRole, ensureScope };
 export default auth;
 //# sourceMappingURL=index.js.map

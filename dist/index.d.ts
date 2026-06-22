@@ -28,13 +28,29 @@ export declare enum Scope {
     STOCK_QUOTE_GET_REALTIME = "@stocks/quote/get/realtime",
     QUOTES_GET = "@quotes/get",
     QUOTES_POST = "@quotes/post",
+    QUOTES_GET_EOD = "@quotes/get/eod",
+    QUOTES_POST_EOD = "@quotes/post/eod",
+    QUOTES_GET_DELAY = "@quotes/get/delay",
+    QUOTES_POST_DELAY = "@quotes/post/delay",
     MACROECONOMICS_INDICATORS_LIST = "@macroeconomics/indicators/list",
     MACROECONOMICS_INDICATORS_GET = "@macroeconomics/indicators/get",
     TRADED_FUNDS_LIST = "@traded-funds/list",
     TRADED_FUNDS_GET = "@traded-funds/get",
+    TRADED_FUNDS_REPORTS_GET = "@traded-funds/reports/get",
+    TRADED_FUNDS_UNITHOLDERS_GET = "@traded-funds/unitholders/get",
+    TRADED_FUNDS_UNITHOLDERS_CONCENTRATION_GET = "@traded-funds/unitholders/concentration/get",
+    TRADED_FUNDS_RATIOS_GET = "@traded-funds/ratios/get",
+    TRADED_FUNDS_RATIOS_VALUATION_GET = "@traded-funds/ratios/valuation/get",
+    TRADED_FUNDS_PORTFOLIO_GET = "@traded-funds/portfolio/get",
+    TRADED_FUNDS_TRADES_GET = "@traded-funds/trades/get",
+    TRADED_FUNDS_UNITS_HISTORY_GET = "@traded-funds/units-history/get",
+    TRADED_FUNDS_GOVERNANCE_GET = "@traded-funds/governance/get",
+    TRADED_FUNDS_CREDIT_QUALITY_GET = "@traded-funds/credit-quality/get",
+    TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET = "@traded-funds/cash-corporate-actions/get",
+    TRADED_FUNDS_CORPORATE_ACTIONS_GET = "@traded-funds/corporate-actions/get",
     INVESTMENT_FIRMS_LIST = "@investment-firms/list",
     WORKFLOWS_START = "@workflows/start",
-    SCREENER_RUN = "@screener/run",
+    SCREENER_GET = "@screener/get",
     DROPS_LIST = "@drops/list",
     DROPS_WALLET_RATING_GET = "@drops/wallet-rating/get",
     DROPS_GET = "@drops/get",
@@ -62,12 +78,13 @@ export declare enum Scope {
 export declare const USER_ROLE_SCOPES: {
     user: any[];
     insider: Scope[];
-    editor: (Scope.COMPANIES_LIST | Scope.COMPANIES_GET | Scope.COMPANIES_SUMMARY_GET | Scope.COMPANIES_SECTORS_LIST | Scope.COMPANIES_SECTORS_GET | Scope.COMPANIES_CHARACTERISTICS_GET | Scope.COMPANIES_DOCUMENTS_GET | Scope.COMPANIES_RAW_REPORTS_GET | Scope.COMPANIES_REPORTS_GET | Scope.COMPANIES_RATIOS_GET | Scope.COMPANIES_RATIOS_VALUATION_GET | Scope.COMPANIES_INSIDER_TRANSACTIONS_GET | Scope.COMPANIES_CASH_CORPORATE_ACTIONS_LIST | Scope.COMPANIES_CASH_CORPORATE_ACTIONS_GET | Scope.COMPANIES_CORPORATE_ACTIONS_GET | Scope.COMPANIES_BANK_DATA_GET | Scope.COMPANIES_SHARES_HISTORY_GET | Scope.STOCKS_QUOTES_POST | Scope.STOCKS_QUOTE_POST | Scope.STOCKS_VARIATIONS_GET | Scope.STOCKS_AVERAGE_VOLUME_POST | Scope.STOCKS_TICKER_QUOTE_GET | Scope.STOCKS_TICKER_VARIATION_GET | Scope.STOCKS_TICKER_QUOTES_GET | Scope.STOCKS_TICKER_AVERAGE_VOLUME_GET | Scope.STOCK_QUOTE_GET_REALTIME | Scope.QUOTES_GET | Scope.QUOTES_POST | Scope.MACROECONOMICS_INDICATORS_LIST | Scope.MACROECONOMICS_INDICATORS_GET | Scope.TRADED_FUNDS_LIST | Scope.TRADED_FUNDS_GET | Scope.INVESTMENT_FIRMS_LIST | Scope.WORKFLOWS_START | Scope.SCREENER_RUN | Scope.DROPS_LIST | Scope.DROPS_WALLET_RATING_GET | Scope.DROPS_GET | Scope.DROPS_LIKE_GET | Scope.DROPS_LIKE_CREATE | Scope.DROPS_LIKE_DELETE | Scope.DROPS_LOGO_GET | Scope.DROPS_RATIOS_GET | Scope.DROPS_ACCOUNTING_RISK_RATIO_GET | Scope.DROPS_RATIO_GET | Scope.DROPS_REFERRALS_GET | Scope.USERS_CREATE | Scope.USERS_LIST | Scope.USERS_API_CREATE | Scope.USERS_NOTIFY | Scope.USERS_ME_GET | Scope.USERS_ME_PATCH | Scope.USERS_ME_DEVICES_CREATE | Scope.USERS_GET | Scope.USERS_PATCH | Scope.NEWS_GET | Scope.NEWS_LIST)[];
+    editor: (Scope.COMPANIES_LIST | Scope.COMPANIES_GET | Scope.COMPANIES_SUMMARY_GET | Scope.COMPANIES_SECTORS_LIST | Scope.COMPANIES_SECTORS_GET | Scope.COMPANIES_CHARACTERISTICS_GET | Scope.COMPANIES_DOCUMENTS_GET | Scope.COMPANIES_RAW_REPORTS_GET | Scope.COMPANIES_REPORTS_GET | Scope.COMPANIES_RATIOS_GET | Scope.COMPANIES_RATIOS_VALUATION_GET | Scope.COMPANIES_INSIDER_TRANSACTIONS_GET | Scope.COMPANIES_CASH_CORPORATE_ACTIONS_LIST | Scope.COMPANIES_CASH_CORPORATE_ACTIONS_GET | Scope.COMPANIES_CORPORATE_ACTIONS_GET | Scope.COMPANIES_BANK_DATA_GET | Scope.COMPANIES_SHARES_HISTORY_GET | Scope.STOCKS_QUOTES_POST | Scope.STOCKS_QUOTE_POST | Scope.STOCKS_VARIATIONS_GET | Scope.STOCKS_AVERAGE_VOLUME_POST | Scope.STOCKS_TICKER_QUOTE_GET | Scope.STOCKS_TICKER_VARIATION_GET | Scope.STOCKS_TICKER_QUOTES_GET | Scope.STOCKS_TICKER_AVERAGE_VOLUME_GET | Scope.STOCK_QUOTE_GET_REALTIME | Scope.QUOTES_GET | Scope.QUOTES_POST | Scope.QUOTES_GET_EOD | Scope.QUOTES_POST_EOD | Scope.QUOTES_GET_DELAY | Scope.QUOTES_POST_DELAY | Scope.MACROECONOMICS_INDICATORS_LIST | Scope.MACROECONOMICS_INDICATORS_GET | Scope.TRADED_FUNDS_LIST | Scope.TRADED_FUNDS_GET | Scope.TRADED_FUNDS_REPORTS_GET | Scope.TRADED_FUNDS_UNITHOLDERS_GET | Scope.TRADED_FUNDS_UNITHOLDERS_CONCENTRATION_GET | Scope.TRADED_FUNDS_RATIOS_GET | Scope.TRADED_FUNDS_RATIOS_VALUATION_GET | Scope.TRADED_FUNDS_PORTFOLIO_GET | Scope.TRADED_FUNDS_TRADES_GET | Scope.TRADED_FUNDS_UNITS_HISTORY_GET | Scope.TRADED_FUNDS_GOVERNANCE_GET | Scope.TRADED_FUNDS_CREDIT_QUALITY_GET | Scope.TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET | Scope.TRADED_FUNDS_CORPORATE_ACTIONS_GET | Scope.INVESTMENT_FIRMS_LIST | Scope.WORKFLOWS_START | Scope.SCREENER_GET | Scope.DROPS_LIST | Scope.DROPS_WALLET_RATING_GET | Scope.DROPS_GET | Scope.DROPS_LIKE_GET | Scope.DROPS_LIKE_CREATE | Scope.DROPS_LIKE_DELETE | Scope.DROPS_LOGO_GET | Scope.DROPS_RATIOS_GET | Scope.DROPS_ACCOUNTING_RISK_RATIO_GET | Scope.DROPS_RATIO_GET | Scope.DROPS_REFERRALS_GET | Scope.USERS_CREATE | Scope.USERS_LIST | Scope.USERS_API_CREATE | Scope.USERS_NOTIFY | Scope.USERS_ME_GET | Scope.USERS_ME_PATCH | Scope.USERS_ME_DEVICES_CREATE | Scope.USERS_GET | Scope.USERS_PATCH | Scope.NEWS_GET | Scope.NEWS_LIST)[];
     admin: Scope[];
 };
 export type UserRole = "user" | "insider" | "editor" | "admin";
 declare const auth: (allowUnauthenticated?: boolean) => (req: any, res: any, next: any) => Promise<any>;
 declare function ensureScope(scope: Scope): (req: any, res: any, next: any) => any;
+declare function ensureQuotesScope(umbrella: Scope, eodScope: Scope, delayScope: Scope): (req: any, res: any, next: any) => any;
 declare function ensureRole(allowedRoles: UserRole[]): (req: any, res: any, next: any) => any;
-export { ensureRole, ensureScope };
+export { ensureQuotesScope, ensureRole, ensureScope };
 export default auth;
