@@ -76,7 +76,7 @@ export var Scope;
     Scope["USERS_PATCH"] = "@users/patch";
     Scope["NEWS_GET"] = "@news/get";
     Scope["NEWS_LIST"] = "@news/list";
-    Scope["INDEXES_GET_HIGHLIGHTS"] = "@indexes/get/highlights";
+    Scope["INDEXES_HIGHLIGHTS_GET"] = "@indexes/highlights/get";
     Scope["ADMIN_FULL"] = "@admin/full";
 })(Scope || (Scope = {}));
 export const USER_ROLE_SCOPES = {
@@ -140,7 +140,7 @@ export const USER_ROLE_SCOPES = {
         Scope.TRADED_FUNDS_CORPORATE_ACTIONS_GET,
         Scope.NEWS_GET,
         Scope.NEWS_LIST,
-        Scope.INDEXES_GET_HIGHLIGHTS,
+        Scope.INDEXES_HIGHLIGHTS_GET,
         Scope.USERS_LIST,
         Scope.USERS_CREATE,
         Scope.USERS_API_CREATE,

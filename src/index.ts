@@ -76,7 +76,7 @@ export enum Scope {
   USERS_PATCH = "@users/patch",
   NEWS_GET = "@news/get",
   NEWS_LIST = "@news/list",
-  INDEXES_GET_HIGHLIGHTS = "@indexes/get/highlights",
+  INDEXES_HIGHLIGHTS_GET = "@indexes/highlights/get",
   ADMIN_FULL = "@admin/full",
 }
 
@@ -141,7 +141,7 @@ export const USER_ROLE_SCOPES = {
     Scope.TRADED_FUNDS_CORPORATE_ACTIONS_GET,
     Scope.NEWS_GET,
     Scope.NEWS_LIST,
-    Scope.INDEXES_GET_HIGHLIGHTS,
+    Scope.INDEXES_HIGHLIGHTS_GET,
     Scope.USERS_LIST,
     Scope.USERS_CREATE,
     Scope.USERS_API_CREATE,
