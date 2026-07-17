@@ -47,6 +47,8 @@ export var Scope;
     Scope["TRADED_FUNDS_PORTFOLIO_GET"] = "@traded-funds/portfolio/get";
     Scope["TRADED_FUNDS_TRADES_GET"] = "@traded-funds/trades/get";
     Scope["TRADED_FUNDS_UNITS_HISTORY_GET"] = "@traded-funds/units-history/get";
+    Scope["TRADED_FUNDS_FUND_FLOW_GET"] = "@traded-funds/fund-flow/get";
+    Scope["TRADED_FUNDS_NAV_GET"] = "@traded-funds/nav/get";
     Scope["TRADED_FUNDS_GOVERNANCE_GET"] = "@traded-funds/governance/get";
     Scope["TRADED_FUNDS_CREDIT_QUALITY_GET"] = "@traded-funds/credit-quality/get";
     Scope["TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET"] = "@traded-funds/cash-corporate-actions/get";
@@ -134,6 +136,8 @@ export const USER_ROLE_SCOPES = {
         Scope.TRADED_FUNDS_PORTFOLIO_GET,
         Scope.TRADED_FUNDS_TRADES_GET,
         Scope.TRADED_FUNDS_UNITS_HISTORY_GET,
+        Scope.TRADED_FUNDS_FUND_FLOW_GET,
+        Scope.TRADED_FUNDS_NAV_GET,
         Scope.TRADED_FUNDS_GOVERNANCE_GET,
         Scope.TRADED_FUNDS_CREDIT_QUALITY_GET,
         Scope.TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET,
