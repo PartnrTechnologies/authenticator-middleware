@@ -53,6 +53,22 @@ export var Scope;
     Scope["TRADED_FUNDS_CREDIT_QUALITY_GET"] = "@traded-funds/credit-quality/get";
     Scope["TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET"] = "@traded-funds/cash-corporate-actions/get";
     Scope["TRADED_FUNDS_CORPORATE_ACTIONS_GET"] = "@traded-funds/corporate-actions/get";
+    Scope["FUNDS_LIST"] = "@funds/list";
+    Scope["FUNDS_GET"] = "@funds/get";
+    Scope["FUNDS_REPORTS_GET"] = "@funds/reports/get";
+    Scope["FUNDS_UNITHOLDERS_GET"] = "@funds/unitholders/get";
+    Scope["FUNDS_UNITHOLDERS_CONCENTRATION_GET"] = "@funds/unitholders/concentration/get";
+    Scope["FUNDS_RATIOS_GET"] = "@funds/ratios/get";
+    Scope["FUNDS_RATIOS_VALUATION_GET"] = "@funds/ratios/valuation/get";
+    Scope["FUNDS_PORTFOLIO_GET"] = "@funds/portfolio/get";
+    Scope["FUNDS_TRADES_GET"] = "@funds/trades/get";
+    Scope["FUNDS_UNITS_HISTORY_GET"] = "@funds/units-history/get";
+    Scope["FUNDS_FUND_FLOW_GET"] = "@funds/fund-flow/get";
+    Scope["FUNDS_NAV_GET"] = "@funds/nav/get";
+    Scope["FUNDS_GOVERNANCE_GET"] = "@funds/governance/get";
+    Scope["FUNDS_CREDIT_QUALITY_GET"] = "@funds/credit-quality/get";
+    Scope["FUNDS_CASH_CORPORATE_ACTIONS_GET"] = "@funds/cash-corporate-actions/get";
+    Scope["FUNDS_CORPORATE_ACTIONS_GET"] = "@funds/corporate-actions/get";
     Scope["INVESTMENT_FIRMS_LIST"] = "@investment-firms/list";
     Scope["WORKFLOWS_START"] = "@workflows/start";
     Scope["SCREENER_GET"] = "@screener/get";
@@ -142,6 +158,22 @@ export const USER_ROLE_SCOPES = {
         Scope.TRADED_FUNDS_CREDIT_QUALITY_GET,
         Scope.TRADED_FUNDS_CASH_CORPORATE_ACTIONS_GET,
         Scope.TRADED_FUNDS_CORPORATE_ACTIONS_GET,
+        Scope.FUNDS_LIST,
+        Scope.FUNDS_GET,
+        Scope.FUNDS_REPORTS_GET,
+        Scope.FUNDS_UNITHOLDERS_GET,
+        Scope.FUNDS_UNITHOLDERS_CONCENTRATION_GET,
+        Scope.FUNDS_RATIOS_GET,
+        Scope.FUNDS_RATIOS_VALUATION_GET,
+        Scope.FUNDS_PORTFOLIO_GET,
+        Scope.FUNDS_TRADES_GET,
+        Scope.FUNDS_UNITS_HISTORY_GET,
+        Scope.FUNDS_FUND_FLOW_GET,
+        Scope.FUNDS_NAV_GET,
+        Scope.FUNDS_GOVERNANCE_GET,
+        Scope.FUNDS_CREDIT_QUALITY_GET,
+        Scope.FUNDS_CASH_CORPORATE_ACTIONS_GET,
+        Scope.FUNDS_CORPORATE_ACTIONS_GET,
         Scope.NEWS_GET,
         Scope.NEWS_LIST,
         Scope.INDEXES_HIGHLIGHTS_GET,
