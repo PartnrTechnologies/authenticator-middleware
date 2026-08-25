@@ -95,6 +95,9 @@ export enum Scope {
   NEWS_GET = "@news/get",
   NEWS_LIST = "@news/list",
   INDEXES_HIGHLIGHTS_GET = "@indexes/highlights/get",
+  // Gates access to the MCP server as a whole. The Worker checks it once per
+  // connection; individual tools still need their own route scopes.
+  MCP_USE = "@mcp/use",
   ADMIN_FULL = "@admin/full",
 }
 
@@ -197,6 +200,19 @@ export type UserRole = "user" | "insider" | "editor" | "admin"
 
 const AUTHENTICATOR_API_URL = process.env.AUTHENTICATOR_API_URL
 
+// A request that arrives through the MCP server names itself in these
+// headers, so usage logs can distinguish it from a direct API call and record
+// which tool ran. Untrusted input: the values are only ever stored, never
+// used for authorization, and the authenticator truncates them.
+const callerSurface = (req) => {
+  const surface = req.headers["x-partnr-surface"]
+  const tool = req.headers["x-partnr-tool"]
+  return {
+    ...(typeof surface === "string" && surface ? { surface } : {}),
+    ...(typeof tool === "string" && tool ? { tool } : {})
+  }
+}
+
 const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticated?) => {
   await axios
     .post(
@@ -204,7 +220,8 @@ const authenticateWithApiKey = async (req, res, next, apiKey, allowUnauthenticat
       {
         api_key: apiKey,
         url: req.protocol + "://" + req.get("host") + req.originalUrl,
-        origin: req.headers["cf-connecting-ip"]
+        origin: req.headers["cf-connecting-ip"],
+        ...callerSurface(req)
       },
       {
         timeout: 20000
